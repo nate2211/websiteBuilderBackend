@@ -23,8 +23,11 @@ from rest_framework.routers import SimpleRouter
 
 from accounts.views import AccountListView, AccountDetailView, AccountCreateView, LoginView, AccountImageViewSet, \
     AccountUpdateView
+from layouts.views import create_layout
+
 
 urlpatterns = [
+    path('api/create_layout/', create_layout, name='create_layout'),
     path('account/update/<int:pk>/', AccountUpdateView.as_view(), name='account-update'),
     path('api/account-images-view/', AccountImageViewSet.as_view({'get': 'list', 'post': 'create'}),
                        name='account-image-view'),

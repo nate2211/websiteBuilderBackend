@@ -93,13 +93,13 @@ class PhysicalProduct(AccountProduct):
 # New model AccountLayouts as requested
 class AccountLayout(models.Model):
     PAGE_CHOICES = [
+        ('home', 'Home'),
         ('shop', 'Shop'),
         ('contact', 'Contact'),
         ('about', 'About'),
     ]
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='layouts')
     page = models.CharField(max_length=10, choices=PAGE_CHOICES)
-    layout = JSONField()
 
     class Meta:
         unique_together = ('account', 'page')  # Ensures one layout per page for each account

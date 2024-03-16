@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+
 from .models import Account, AccountImage, AccountLink, PhysicalProduct, DigitalProduct, AccountLayout
 
 User = get_user_model()
@@ -38,9 +39,16 @@ class AccountLinkSerializer(serializers.ModelSerializer):
         model = AccountLink
         fields = ('id', 'link')
 class AccountLayoutSerializer(serializers.ModelSerializer):
+    layouts = serializers.SerializerMethodField()
+
+    def get_layouts(self, obj):
+        from layouts.serializers import LayoutSerializer
+        layouts = LayoutSerializer(obj.layouts.all(), many=True).data
+        return layouts
+
     class Meta:
         model = AccountLayout
-        fields = ['id', 'account', 'page', 'layout']
+        fields = ['id', 'account', 'page', 'layouts']
 
 class AccountSerializer(serializers.ModelSerializer):
     images = AccountImageSerializer(many=True, read_only=True)
